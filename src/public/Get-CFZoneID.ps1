@@ -25,9 +25,11 @@
 
     $Uri = $Script:APIURI + '/zones'
 
+    Set-CFRequestData -Uri $Uri
+
     try {
         Write-Verbose -Message 'Getting Zone information'
-        $Response = Invoke-CFAPI4Request -Uri $Uri -Headers $Headers -ErrorAction Stop
+        $Response = Invoke-CFAPI4Request #-Uri $Uri -Headers $Headers -ErrorAction Stop
     }
     catch {
         Throw $_

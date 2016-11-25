@@ -36,10 +36,12 @@
 
     $Uri = $Script:APIURI + '/user'
 
+    Set-CFRequestData -Uri $Uri -Headers $Headers
+
     try {
         Write-Verbose  'Connect-CFClientAPI: Attempting to connect'
-        $null = Invoke-CFAPI4Request -Uri $Uri -Headers $Headers -ErrorAction Stop
-        Write-Verbose 'Connect-CFClientAPI: Connected Successfully'
+        $null = Invoke-CFAPI4Request -ErrorAction Stop
+        Write-Verbose 'Connect-CFClientAPI: Connected successfully'
 
         # Make the headers we used available accross the entire script scope
         $Script:Headers = $Headers

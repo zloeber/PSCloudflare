@@ -33,9 +33,11 @@ Function Get-CFFirewallRulePage {
         $Uri = $Script:APIURI + ('/zones/{0}/firewall/access_rules/rules' -f $ZoneID)
     }  
 
-    Write-Verbose "Get-CFFirewallRulePage: URI = '$Uri'"
+    Write-Verbose "Get-CFFirewallRulePage: Page Number = '$PageNumber'"
     try {
-        $Response = Invoke-CFAPI4Request -Uri $Uri -Headers $Script:Headers -Body $Data -ErrorAction Stop
+        Set-CFRequestData -Uri $Uri -Body $Data
+
+        $Response = Invoke-CFAPI4Request -ErrorAction Stop
     }
     catch {
         throw $_

@@ -112,11 +112,11 @@
     
     Write-Verbose "Add-CFFirewallRule: URI = '$Uri'"
 
-    $JSONData = $Data | ConvertTo-Json
-
     try {
         Write-Verbose -Message "Add-CFFirewallRule: Adding '$Item' as '$Target' in '$Mode' mode..."
-        $Response = Invoke-CFAPI4Request -Uri $Uri -Headers $Script:Headers -Body $JSONData -Method Post -ErrorAction Stop
+
+        Set-CFRequestData -Uri $Uri -Body $Data -Method 'Post'
+        $Response = Invoke-CFAPI4Request -ErrorAction Stop
     }
     catch {
         Throw $_

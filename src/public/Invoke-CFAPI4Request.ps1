@@ -22,24 +22,27 @@
 
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory = $True)]
-        [ValidateNotNullOrEmpty()]
-        [Uri]$Uri,
+        [Parameter()]
+        [Uri]$Uri = ($Script:RESTParams).URI,
        
         [Parameter()]
-        [HashTable]$Headers = $Script:Headers,
+        [HashTable]$Headers = ($Script:RESTParams).Headers,
 
         [Parameter()]
-        [ValidateNotNullOrEmpty()]
-        [Object]$Body = $null,
+        [Hashtable]$Body =  ($Script:RESTParams).Body,
 
         [Parameter()]
-        [ValidateSet('Head','Get','Put', 'Patch', 'Post', 'Delete')]
-        [String]$Method = 'Get'
+        [String]$Method =  ($Script:RESTParams).Method
     )
-    
+
+    if ($Uri -eq $null) {
+        throw 'Need to run Set-CFRequestData first!'
+    }
+    $BodyData = if ($Body -eq $null) {$null} else { if ($Method -ne 'Get') {$Body | ConvertTo-Json} else {$Body}}
+
+
     try {
-        $JSONResponse = Invoke-RestMethod -Uri $Uri -Headers $Headers -ContentType 'application/json' -Method $Method -Body $Body -ErrorAction Stop
+        $JSONResponse = Invoke-RestMethod -Uri $Uri -Headers $Headers -ContentType 'application/json' -Method $Method -Body $BodyData -ErrorAction Stop
     }
     catch {
         Write-Debug -Message 'Error Processing in Invoke-CFAPI4Request'

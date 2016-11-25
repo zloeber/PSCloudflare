@@ -44,12 +44,13 @@
         $Uri = $Script:APIURI + ('/user/firewall/access_rules/rules/{0}' -f $RuleID)
     }
 
+    Set-CFRequestData -Uri $Uri -Method 'Delete'
+    
     try {
-        Write-Verbose -Message 'Removing IP'
-        $Response = Invoke-CFAPI4Request -Uri $Uri -Headers $Headers -Method Delete -ErrorAction Stop
+        Write-Verbose -Message 'Attempting to remove firewall rule...'
+        $Response = Invoke-CFAPI4Request -ErrorAction Stop
     }
     catch {
-        $MyError = $_
-        Throw $MyError
+        Throw $_
     }
 }

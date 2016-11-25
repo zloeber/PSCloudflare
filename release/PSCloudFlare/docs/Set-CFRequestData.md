@@ -4,19 +4,19 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Invoke-CFAPI4Request
+# Set-CFRequestData
 
 ## SYNOPSIS
-Send REST request to Cloudflare URI.
+Sets the parameters for a request to the Cloudflare API.
 
 ## SYNTAX
 
 ```
-Invoke-CFAPI4Request [[-Uri] <Uri>] [[-Headers] <Hashtable>] [[-Body] <Hashtable>] [[-Method] <String>]
+Set-CFRequestData [-URI] <String> [[-Headers] <Hashtable>] [[-Body] <Hashtable>] [[-Method] <String>]
 ```
 
 ## DESCRIPTION
-Send REST request to Cloudflare URI.
+Sets the parameters for a request to the Cloudflare API.
 
 ## EXAMPLES
 
@@ -27,17 +27,17 @@ TBD
 
 ## PARAMETERS
 
-### -Uri
+### -URI
 Target URI to send request to.
 
 ```yaml
-Type: Uri
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
 Position: 1
-Default value: ($Script:RESTParams).URI
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -52,7 +52,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: ($Script:RESTParams).Headers
+Default value: $Script:Headers
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -67,7 +67,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: ($Script:RESTParams).Body
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -84,7 +84,7 @@ Aliases:
 
 Required: False
 Position: 4
-Default value: ($Script:RESTParams).Method
+Default value: Get
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
