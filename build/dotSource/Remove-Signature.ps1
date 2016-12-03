@@ -4,7 +4,7 @@ function Script:Remove-Signature
     [cmdletbinding()]
 
     Param(
-        [Parameter(Mandatory = $False,Position = 0,ValueFromPipeline = $True,ValueFromPipelineByPropertyName = $True)]
+        [Parameter(ValueFromPipeline = $True,ValueFromPipelineByPropertyName = $True)]
         [Alias('Path')]
         [system.io.fileinfo[]]$FilePath
     )
@@ -20,20 +20,16 @@ function Script:Remove-Signature
 			
             If($Item.Extension -match '\.ps1|\.psm1|\.psd1|\.ps1xml')
             {
-                Try
-                {
+                Try {
                     $Content = Get-Content -Path $Item.FullName -ErrorAction Stop
     
                     $StringBuilder = New-Object -TypeName System.Text.StringBuilder -ErrorAction Stop
     
-                    Foreach($Line in $Content)
-                    {
-                        If($Line -match '^# SIG # Begin signature block|^<!-- SIG # Begin signature block -->')
-                        {
+                    Foreach($Line in $Content) {
+                        If($Line -match '^# SIG # Begin signature block|^<!-- SIG # Begin signature block -->') {
                             Break
                         }
-                        Else
-                        {
+                        Else {
                             $null = $StringBuilder.AppendLine($Line)
                         }
                     }

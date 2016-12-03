@@ -15,3 +15,18 @@ $Script:ZoneName = $null
 
 # Just in case the URI changes in the future
 $Script:APIURI = 'https://api.cloudflare.com/client/v4'
+
+# Some enumerations that will allow us to do validateset-like operations and include $null values
+Enum CFFirewallTarget {
+    ip
+    ip_range
+    country
+    asn
+}
+
+Enum CFFirewallMode {
+    whitelist
+    block
+    challenge
+    js_challenge
+}
