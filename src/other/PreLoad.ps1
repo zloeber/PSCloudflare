@@ -30,3 +30,18 @@ Enum CFFirewallMode {
     challenge
     js_challenge
 }
+
+Enum CFWAFRuleGroupMode {
+    on
+    off
+}
+
+Enum CFWAFRuleMode {
+    on
+    off
+    default
+    disable
+    simulate
+    block
+    challenge
+}
