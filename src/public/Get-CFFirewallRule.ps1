@@ -106,38 +106,9 @@
         $Data.mode = [CFFirewallMode]::$MatchMode
     }
 
-    <#switch ([CFFirewallTarget]::$MatchTarget) {
-        'ip' { 
-            if (-not ($MatchItem -match [IPAddress]$MatchItem)) { 
-                throw 'IP address is not valid'
-            }
-        }
-        'ip_range' {
-            if (-not (IsIPRange $MatchItem)) {
-                throw "Subnet address '$MatchItem' does not match the expected CIDR format (example:  192.168.0.0/24)"
-            }
-        }
-        'country' {
-            if (-not (IsCountryCode $MatchItem)) {
-                throw "Country code '$MatchItem' does not match the expected country code format (example: US)"
-            }
-        }
-        'asn' {
-            if ($MatchItem -notmatch '^(AS\d+)$') {
-                throw "ASN '$MatchItem' does not match the expected ASN format (example: AS1234)"
-            }
-        }
-        default {
-            Write-Verbose "$($FunctionName): MatchTarget was null"
-        }
-    }
-    #>
-    if ( -not [string]::IsNullOrEmpty($MatchItem) ) {
+    if ( (-not [string]::IsNullOrEmpty($MatchItem)) -and (-not [string]::IsNullOrEmpty([CFFirewallTarget]::$MatchTarget)))  {
         Write-Verbose "$($FunctionName): A MatchTarget and MatchItem were passed ($($MatchItem) - $([CFFirewallTarget]::$MatchTarget)), adding this to the data request."
         $Data.configuration_value = $MatchItem
-    }
-
-    if ([CFFirewallTarget]::$MatchTarget -ne $null) {
         $Data.configuration_target = [CFFirewallTarget]::$MatchTarget
     }
     

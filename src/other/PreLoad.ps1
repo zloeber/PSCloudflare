@@ -45,3 +45,8 @@ Enum CFWAFRuleMode {
     block
     challenge
 }
+
+Enum CFPageRuleStatus {
+    active
+    disabled
+}
