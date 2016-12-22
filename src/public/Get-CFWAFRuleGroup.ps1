@@ -6,8 +6,14 @@
     List Cloudflare WAF rules.
 .PARAMETER ZoneID
     You apply WAF rules to individual zones or to the whole organization. If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
+.PARAMETER PackageID
+    Package ID to query. If not supplied then all package IDs are queried.
 .PARAMETER Name
     rule group name. If not supplied then all rule groups are returned.
+.PARAMETER Description
+    Description to query for.
+.PARAMETER Mode
+    WAF rule group mode to query for. Can be on or off. Default is all modes.
 .PARAMETER OrderBy
     Order the results by configuration_target, configuration_value, or mode. Default is configuration_value
 .PARAMETER Direction
@@ -20,9 +26,6 @@
     PS> Get-CFWAFRuleGroup
 
     Shows all cloudflare WAF rule groups for the zone.
-
-.EXAMPLE
-    TBD
 .NOTES
     Author: Zachary Loeber
 .LINK

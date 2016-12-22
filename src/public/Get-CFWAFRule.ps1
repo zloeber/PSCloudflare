@@ -6,8 +6,16 @@
     List Cloudflare WAF rules.
 .PARAMETER ZoneID
     You apply WAF rules to individual zones or to the whole organization. If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
-.PARAMETER Name
-    rule name. If not supplied then all rules are returned.
+.PARAMETER PackageID
+    Package ID to query. If not supplied then all package IDs are queried.
+.PARAMETER GroupID
+    Group ID to query. If not supplied then all group IDs are queried.
+.PARAMETER Description
+    Description to query for.
+.PARAMETER Mode
+    WAF mode to query for. Can be whitelist, block, challenge, or js_challenge. Default is all modes.
+.PARAMETER Priority
+    WAF priority to query for. Default is all priorities.
 .PARAMETER OrderBy
     Order the results by configuration_target, configuration_value, or mode. Default is configuration_value
 .PARAMETER Direction
@@ -88,7 +96,7 @@
 
     if ([string]::IsNullOrEmpty($PackageID)) {
         Write-Verbose "$($FunctionName): No Package ID passed, pulling all package IDs"
-        $PackageIDs = Get-CFWAFRulePackage -ZoneID $ZoneID | Foreach {$_.id}
+        $PackageIDs = Get-CFWAFRulePackage -ZoneID $ZoneID | Foreach-Object {$_.id}
     }
     else {
         $PackageIDs = @($PackageID)

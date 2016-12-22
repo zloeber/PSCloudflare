@@ -4,41 +4,42 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Remove-CFFirewallRule
+# Add-CFFirewallRule
 
 ## SYNOPSIS
-Removes a Cloudflare firewall rule.
+Adds a cloudflare firewall rule.
 
 ## SYNTAX
 
 ```
-Remove-CFFirewallRule [-RuleID] <String> [-ZoneID <String>] [-WhatIf] [-Confirm]
+Add-CFFirewallRule [-Item] <String> [[-ZoneID] <String>] [[-Target] <String>] [[-Mode] <String>]
+ [[-Notes] <String>]
 ```
 
 ## DESCRIPTION
-Removes a Cloudflare firewall rule.
+Adds a cloudflare firewall rule.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Remove-CFFirewallRule -RuleID 54274c4cda768def3ca6097c95021155
+Add-CFFirewallRule -ZoneID $ZoneID -Item '96.9.128.0/24' -Notes 'Load Balancer Ip Block - 4.1' -Target 'ip_range' -Mode:challenge -Verbose
 ```
 
 ## PARAMETERS
 
-### -RuleID
-RuleID to remove
+### -Item
+This can be an IP, IP range (Cidr notation), ASN (AS####), or 2 letter Country code
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: id
+Aliases: 
 
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -52,38 +53,54 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+### -Target
+Are you adding an IP, IP_Range, ASN, or Country?
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
-Aliases: wi
+Aliases: 
 
 Required: False
-Position: Named
-Default value: None
+Position: 3
+Default value: Ip
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -Mode
+What is this rule going to do?
+Options include whitelist, block, challenge, js_challenge.
+Default is to whitelist.
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
-Aliases: cf
+Aliases: 
 
 Required: False
-Position: Named
+Position: 4
+Default value: Whitelist
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Notes
+Any additional notes for the added firewall rule
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
