@@ -12,6 +12,8 @@
     Return results in asc (ascending) or dec (decending) order. Default is asc.
 .PARAMETER PageLimit
     Maximum results returned per page. Default is 50. Max is 500.
+.PARAMETER ResultLimit
+    Maximum page results returned. Default is 0 (unlimited).
 .EXAMPLE
     PS> Get-CFTrafficLog
 
@@ -45,60 +47,58 @@
 
         [Parameter()]
         [ValidateRange(1,500)]
-        [int]$PageLimit = 50
+        [int]$PageLimit = 50,
+
+        [Parameter()]
+        [int]$ResultLimit = 0
     )  
+    Begin {
+        $FunctionName = $MyInvocation.MyCommand.Name
 
-    $FunctionName = $MyInvocation.MyCommand.Name
+        # If the ZoneID is empty see if we have loaded one earlier in the module and use it instead.
+        if ([string]::IsNullOrEmpty($ZoneID) -and ($Script:ZoneID -ne $null)) {
+            Write-Verbose "$($FunctionName): No ZoneID was passed but the current targeted zone was $($Script:ZoneName) so this will be used."
+            $ZoneID = $Script:ZoneID
+        }
 
-    # If the ZoneID is empty see if we have loaded one earlier in the module and use it instead.
-    if ([string]::IsNullOrEmpty($ZoneID) -and ($Script:ZoneID -ne $null)) {
-        Write-Verbose "$($FunctionName): No ZoneID was passed but the current targeted zone was $($Script:ZoneName) so this will be used."
-        $ZoneID = $Script:ZoneID
+        # If we specified a zone earlier, then we call the zone page
+        if ([string]::IsNullOrEmpty($ZoneID)) {
+            $Uri = $Script:APIURI + ('/user/firewall/events/')
+        }
+        else {
+            $Uri = $Script:APIURI + ('/zones/{0}/firewall/events' -f $ZoneID)
+        }
+        $Data = @{
+            'direction' = $Direction
+            'order' = $Orderby
+            'per_page' = $PageLimit
+        }
     }
 
-     # If we specified a zone earlier, then we call the zone page
-     # https://www.cloudflare.com/api/v4/zones/[zoneID]/firewall/events?page=1&per_page=50
-    if ([string]::IsNullOrEmpty($ZoneID)) {
-        $Uri = $Script:APIURI + ('/user/firewall/events/')
-    }
-    else {
-        $Uri = $Script:APIURI + ('/zones/{0}/firewall/events' -f $ZoneID)
-    }  
+    Process {
+        $ResultCount = 0
 
+        Do {
+            $ResultCount++
+            Write-Verbose "$($FunctionName): Returning result #$($ResultCount)"
+            if ($LatestPage.result_info.next_page_id) {
+                $Data.page_id = $LatestPage.result_info.next_page_id
+            }
 
-    $Data = @{
-        'direction' = $Direction
-        'order' = $Orderby
-        'per_page' = $PageLimit
-        'page' = 1
-    }
-    
-    # Get the first page, from there we will be able to see the total page numbers
-    try {
-        Write-Verbose "$($FunctionName): Returning the first result"
-        Set-CFRequestData -Uri $Uri -Body $Data
-        $LatestPage = Invoke-CFAPI4Request -ErrorAction Stop
-        $LatestPage.result
-        $TotalPages = $LatestPage.result_info.total_pages
-    }
-    catch {
-        throw $_
-    }
-
-    $PageNumber = 2
-    
-    # Get any more pages
-    while ($PageNumber -le $TotalPages) {
-        try {
-             Write-Verbose "$($FunctionName): Returning $PageNumber of $TotalPages"
-            $Data.page = $PageNumber
             Set-CFRequestData -Uri $Uri -Body $Data
-            (Invoke-CFAPI4Request -ErrorAction Stop).result
-            $PageNumber++
-        }
-        catch {
-            throw $_
-            break
-        }
+
+            try {
+                $LatestPage = Invoke-CFAPI4Request -ErrorAction Stop
+
+                # Something about the results in this api query requires us to return it as an array
+                @($LatestPage.result)
+            }
+            catch {
+                throw $_
+                break
+            }
+
+            Write-Verbose "$($FunctionName): Next page result ID = $($LatestPage.result_info.next_page_id)"
+        } Until ([string]::IsNullOrEmpty($LatestPage.result_info.next_page_id) -or (($ResultCount -ge $ResultLimit) -and ($ResultLimit -ne 0) )  )
     }
 }

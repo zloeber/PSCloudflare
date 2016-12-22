@@ -35,17 +35,20 @@
         [String]$Method =  ($Script:RESTParams).Method
     )
 
-    if ($Uri -eq $null) {
-        throw 'Need to run Set-CFRequestData first!'
-    }
-    $BodyData = if ($Body -eq $null) {$null} else { if ($Method -ne 'Get') {$Body | ConvertTo-Json} else {$Body}}
+    $FunctionName = $MyInvocation.MyCommand.Name
 
+    if ($Uri -eq $null) {
+        throw "$($FunctionName): Need to run Set-CFRequestData first!"
+    }
+
+    # Make null if nothing passed, if the method is 'get' then convert to json, anything else leave as it is.
+    $BodyData = if ($Body -eq $null) {$null} else { if ($Method -ne 'Get') {$Body | ConvertTo-Json} else {$Body}}
 
     try {
         $JSONResponse = Invoke-RestMethod -Uri $Uri -Headers $Headers -ContentType 'application/json' -Method $Method -Body $BodyData -ErrorAction Stop
     }
     catch {
-        Write-Debug -Message 'Error Processing in Invoke-CFAPI4Request'
+        Write-Debug -Message "$($FunctionName): Error Processing"
         $MyError = $_
         if ($null -ne $MyError.Exception.Response) {
             try {
@@ -73,13 +76,16 @@
             }
             catch {
                 # An error has occured whilst processing the error, so we will just throw the original error
+                Write-Verbose "$($FunctionName): Unrecognized error connecting with the API."
                 Throw $MyError
             }
         }
         else {
             # This wasn't an error from the API, so we need to let the user know directly
+            Write-Verbose "$($FunctionName): Non-API related error occurred"
             Throw $MyError
         }
     }
-    Write-Output -InputObject $JSONResponse
+    
+    $JSONResponse
 }
