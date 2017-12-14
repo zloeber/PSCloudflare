@@ -50,7 +50,7 @@
             IsNullOrCFID $_
         })]
         [String]$ZoneID,
-        
+
         [Parameter()]
         [String]$MatchItem = $null,
 
@@ -75,7 +75,7 @@
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]$PageLimit = 50
-    )  
+    )
 
     $FunctionName = $MyInvocation.MyCommand.Name
 
@@ -91,7 +91,7 @@
     }
     else {
         $Uri = $Script:APIURI + ('/zones/{0}/firewall/access_rules/rules' -f $ZoneID)
-    }  
+    }
 
 
     $Data = @{
@@ -102,16 +102,16 @@
         'page' = 1
     }
 
-    if ([CFFirewallMode]::$MatchMode -ne $null) {
-        $Data.mode = [CFFirewallMode]::$MatchMode
+    if ($null -ne [CFFirewallMode]::$MatchMode) {
+        $Data.mode = $MatchMode.ToString()
     }
 
     if ( (-not [string]::IsNullOrEmpty($MatchItem)) -and (-not [string]::IsNullOrEmpty([CFFirewallTarget]::$MatchTarget)))  {
         Write-Verbose "$($FunctionName): A MatchTarget and MatchItem were passed ($($MatchItem) - $([CFFirewallTarget]::$MatchTarget)), adding this to the data request."
         $Data.configuration_value = $MatchItem
-        $Data.configuration_target = [CFFirewallTarget]::$MatchTarget
+        $Data.configuration_target = $MatchTarget.ToString()
     }
-    
+
     # Get the first page, from there we will be able to see the total page numbers
     try {
         Write-Verbose "$($FunctionName): Returning the first result"
@@ -125,7 +125,7 @@
     }
 
     $PageNumber = 2
-    
+
     # Get any more pages
     while ($PageNumber -le $TotalPages) {
         try {

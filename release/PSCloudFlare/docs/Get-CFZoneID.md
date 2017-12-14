@@ -1,5 +1,6 @@
----
+﻿---
 external help file: PSCloudFlare-help.xml
+Module Name: PSCloudFlare
 online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---

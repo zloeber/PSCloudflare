@@ -1,8 +1,8 @@
----
+﻿---
 Module Name: PSCloudFlare
 Module Guid: 00000000-0000-0000-0000-000000000000
 Download Help Link: https://github.com/zloeber/PSCloudFlare/release/PSCloudFlare/docs/PSCloudFlare.md
-Help Version: 0.0.5
+Help Version: 0.0.4
 Locale: en-US
 ---
 
@@ -22,6 +22,9 @@ Gets the currently targeted ZoneID.
 
 ### [Get-CFCurrentZoneID](Get-CFCurrentZoneID.md)
 Gets the currently targeted ZoneID.
+
+### [Get-CFDNSRecord](Get-CFDNSRecord.md)
+List Cloudflare page rules.
 
 ### [Get-CFFirewallRule](Get-CFFirewallRule.md)
 List Cloudflare firewall rules.
@@ -64,6 +67,5 @@ Modifies a cloudflare firewall rule.
 
 ### [Set-CFRequestData](Set-CFRequestData.md)
 Sets the parameters for a request to the Cloudflare API.
-
 
 

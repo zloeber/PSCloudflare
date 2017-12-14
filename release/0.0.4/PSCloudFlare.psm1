@@ -53,7 +53,17 @@ Enum CFPageRuleStatus {
     disabled
 }
 
-
+Enum CFDNSRecordType {
+    A
+    AAAA
+    CNAME
+    TXT
+    SRV
+    LOC
+    MX
+    NS
+    SPF
+}
 
 ## PRIVATE MODULE FUNCTIONS AND DATA ##
 
@@ -199,8 +209,6 @@ function Get-CallerPreference {
     }
 }
 
-
-
 Function IsCFID ([string]$ID) {
     if (-not ([string]::IsNullOrEmpty($ID))) {
         return ($ID -match '^[a-f0-9]{32}$')
@@ -210,19 +218,13 @@ Function IsCFID ([string]$ID) {
     }
 }
 
-
-
 Function IsCountryCode ([string]$Code) {
     return ($Code  -match '^(AF|AX|AL|DZ|AS|AD|AO|AI|AQ|AG|AR|AM|AW|AU|AT|AZ|BS|BH|BD|BB|BY|BE|BZ|BJ|BM|BT|BO|BQ|BA|BW|BV|BR|IO|BN|BG|BF|BI|KH|CM|CA|CV|KY|CF|TD|CL|CN|CX|CC|CO|KM|CG|CD|CK|CR|CI|HR|CU|CW|CY|CZ|DK|DJ|DM|DO|EC|EG|SV|GQ|ER|EE|ET|FK|FO|FJ|FI|FR|GF|PF|TF|GA|GM|GE|DE|GH|GI|GR|GL|GD|GP|GU|GT|GG|GN|GW|GY|HT|HM|VA|HN|HK|HU|IS|IN|ID|IR|IQ|IE|IM|IL|IT|JM|JP|JE|JO|KZ|KE|KI|KP|KR|KW|KG|LA|LV|LB|LS|LR|LY|LI|LT|LU|MO|MK|MG|MW|MY|MV|ML|MT|MH|MQ|MR|MU|YT|MX|FM|MD|MC|MN|ME|MS|MA|MZ|MM|NA|NR|NP|NL|NC|NZ|NI|NE|NG|NU|NF|MP|NO|OM|PK|PW|PS|PA|PG|PY|PE|PH|PN|PL|PT|PR|QA|RE|RO|RU|RW|BL|SH|KN|LC|MF|PM|VC|WS|SM|ST|SA|SN|RS|SC|SL|SG|SX|SK|SI|SB|SO|ZA|GS|SS|ES|LK|SD|SR|SJ|SZ|SE|CH|SY|TW|TJ|TZ|TH|TL|TG|TK|TO|TT|TN|TR|TM|TC|TV|UG|UA|AE|GB|US|UM|UY|UZ|VU|VE|VN|VG|VI|WF|EH|YE|ZM|ZW)$')
 }
 
-
-
 Function IsIPRange ([string]$Range) {
     return ($Range  -match '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$')
 }
-
-
 
 Function IsNullOrCFID ([string]$ID) {
     if (-not ([string]::IsNullOrEmpty($ID))) {
@@ -233,15 +235,13 @@ Function IsNullOrCFID ([string]$ID) {
     }
 }
 
-
-
 ## PUBLIC MODULE FUNCTIONS AND DATA ##
 
 Function Add-CFFirewallRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Add-CFFirewallRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Add-CFFirewallRule.md
     #>
 
     [CmdletBinding()]
@@ -346,13 +346,11 @@ Function Add-CFFirewallRule {
 }
 
 
-
-
 Function Connect-CFClientAPI {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Connect-CFClientAPI.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Connect-CFClientAPI.md
     #>
 
     [CmdletBinding()]
@@ -390,37 +388,31 @@ Function Connect-CFClientAPI {
 }
 
 
-
-
 Function Get-CFCurrentZone {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFCurrentZone.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFCurrentZone.md
     #>
     return $Script:Zone
 }
-
-
 
 
 Function Get-CFCurrentZoneID {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFCurrentZoneID.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFCurrentZoneID.md
     #>
     return $Script:ZoneID
 }
 
 
-
-
-Function Get-CFFirewallRule {
-<#
+Function Get-CFDNSRecord {
+    <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFFirewallRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFDNSRecord.md
     #>
 
     [CmdletBinding()]
@@ -430,7 +422,114 @@ Function Get-CFFirewallRule {
             IsNullOrCFID $_
         })]
         [String]$ZoneID,
-        
+
+        [Parameter()]
+        [CFDNSRecordType]$RecordType,
+
+        [Parameter()]
+        [string]$Name,
+
+        [Parameter()]
+        [ValidateNotNullOrEmpty()]
+        [int]$PerPage = 50,
+
+        [Parameter()]
+        [ValidateSet('type', 'name', 'content', 'ttl', 'proxied')]
+        [string]$Order = 'name',
+
+        [Parameter()]
+        [ValidateSet( 'asc', 'dec' )]
+        [string]$Direction = 'asc',
+
+        [Parameter()]
+        [ValidateSet( 'any', 'all' )]
+        [string]$MatchScope = 'all'
+    )
+
+    $FunctionName = $MyInvocation.MyCommand.Name
+
+    # If the ZoneID is empty see if we have loaded one earlier in the module and use it instead.
+    if ([string]::IsNullOrEmpty($ZoneID) -and ($null -ne $Script:ZoneID)) {
+        Write-Verbose "$($FunctionName): No ZoneID was passed but the current targeted zone was $($Script:ZoneName) so this will be used."
+        $ZoneID = $Script:ZoneID
+    }
+    elseif ([string]::IsNullOrEmpty($ZoneID)) {
+        throw 'No Zone was set or passed!'
+    }
+
+    # If no record type was passed then try to get them all
+    if ($null -eq [CFDNSRecordType]::$RecordType) {
+        $PassedParams = $PsCmdlet.MyInvocation.BoundParameters
+        [enum]::getnames([CFDNSRecordType]) | ForEach {
+            Get-CFDNSRecord @PassedParams -RecordType $_
+        }
+    }
+    else {
+        $Data = @{
+            'direction' = $Direction
+            'match' = $MatchScope
+            'order' = $Order
+            'per_page' = $PerPage
+        }
+        $Data.type = $RecordType.ToString()
+        # Always start at the first page
+        $Data.page = 1
+
+        if ($null -ne $Name) {
+            $Data.name = $Name
+        }
+
+        # Construct the URI for this package
+        $Uri = $Script:APIURI + ('/zones/{0}/dns_records' -f $ZoneID)
+
+        # Get the first page, from there we will be able to see the total page numbers
+        try {
+            Write-Verbose "$($FunctionName): Returning the first result"
+            Set-CFRequestData -Uri $Uri -Body $Data
+            $LatestPage = Invoke-CFAPI4Request -ErrorAction Stop
+            $LatestPage.result
+            $TotalPages = $LatestPage.result_info.total_pages
+        }
+        catch {
+            throw $_
+        }
+
+        $PageNumber = 2
+
+        # Get any more pages
+        while ($PageNumber -le $TotalPages) {
+            try {
+                Write-Verbose "$($FunctionName): Returning $PageNumber of $TotalPages"
+                $Data.page = $PageNumber
+                Set-CFRequestData -Uri $Uri -Body $Data
+                (Invoke-CFAPI4Request -ErrorAction Stop).result
+                $PageNumber++
+            }
+            catch {
+                throw $_
+                break
+            }
+        }
+    }
+
+}
+
+
+Function Get-CFFirewallRule {
+<#
+    .EXTERNALHELP PSCloudFlare-help.xml
+    .LINK
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFFirewallRule.md
+    #>
+
+    [CmdletBinding()]
+    Param (
+        [Parameter()]
+        [ValidateScript({
+            IsNullOrCFID $_
+        })]
+        [String]$ZoneID,
+
         [Parameter()]
         [String]$MatchItem = $null,
 
@@ -455,7 +554,7 @@ Function Get-CFFirewallRule {
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]$PageLimit = 50
-    )  
+    )
 
     $FunctionName = $MyInvocation.MyCommand.Name
 
@@ -471,7 +570,7 @@ Function Get-CFFirewallRule {
     }
     else {
         $Uri = $Script:APIURI + ('/zones/{0}/firewall/access_rules/rules' -f $ZoneID)
-    }  
+    }
 
 
     $Data = @{
@@ -482,16 +581,16 @@ Function Get-CFFirewallRule {
         'page' = 1
     }
 
-    if ([CFFirewallMode]::$MatchMode -ne $null) {
-        $Data.mode = [CFFirewallMode]::$MatchMode
+    if ($null -ne [CFFirewallMode]::$MatchMode) {
+        $Data.mode = $MatchMode.ToString()
     }
 
     if ( (-not [string]::IsNullOrEmpty($MatchItem)) -and (-not [string]::IsNullOrEmpty([CFFirewallTarget]::$MatchTarget)))  {
         Write-Verbose "$($FunctionName): A MatchTarget and MatchItem were passed ($($MatchItem) - $([CFFirewallTarget]::$MatchTarget)), adding this to the data request."
         $Data.configuration_value = $MatchItem
-        $Data.configuration_target = [CFFirewallTarget]::$MatchTarget
+        $Data.configuration_target = $MatchTarget.ToString()
     }
-    
+
     # Get the first page, from there we will be able to see the total page numbers
     try {
         Write-Verbose "$($FunctionName): Returning the first result"
@@ -505,7 +604,7 @@ Function Get-CFFirewallRule {
     }
 
     $PageNumber = 2
-    
+
     # Get any more pages
     while ($PageNumber -le $TotalPages) {
         try {
@@ -523,13 +622,11 @@ Function Get-CFFirewallRule {
 }
 
 
-
-
 Function Get-CFIP {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFIP.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFIP.md
     #>
 
     [CmdletBinding()]
@@ -549,13 +646,11 @@ Function Get-CFIP {
 }
 
 
-
-
 Function Get-CFPageRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFPageRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFPageRule.md
     #>
 
     [CmdletBinding()]
@@ -646,25 +741,21 @@ Function Get-CFPageRule {
 }
 
 
-
-
 Function Get-CFRequestData {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFRequestData.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFRequestData.md
     #>
     return $Script:RESTParams
 }
-
-
 
 
 Function Get-CFTrafficLog {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFTrafficLog.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFTrafficLog.md
     #>
 
     [CmdletBinding()]
@@ -742,13 +833,11 @@ Function Get-CFTrafficLog {
 }
 
 
-
-
 Function Get-CFWAFRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFWAFRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFWAFRule.md
     #>
 
     [CmdletBinding()]
@@ -880,13 +969,11 @@ Function Get-CFWAFRule {
 }
 
 
-
-
 Function Get-CFWAFRuleGroup {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFWAFRuleGroup.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFWAFRuleGroup.md
     #>
 
     [CmdletBinding()]
@@ -1000,13 +1087,11 @@ Function Get-CFWAFRuleGroup {
 }
 
 
-
-
 Function Get-CFWAFRulePackage {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFWAFRulePackage.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFWAFRulePackage.md
     #>
 
     [CmdletBinding()]
@@ -1093,13 +1178,11 @@ Function Get-CFWAFRulePackage {
 }
 
 
-
-
 Function Get-CFZoneID {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Get-CFZoneID.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Get-CFZoneID.md
     #>
 
     [CmdletBinding()]
@@ -1135,13 +1218,11 @@ Function Get-CFZoneID {
 }
 
 
-
-
 Function Invoke-CFAPI4Request {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Invoke-CFAPI4Request.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Invoke-CFAPI4Request.md
     #>
 
     [CmdletBinding()]
@@ -1215,13 +1296,11 @@ Function Invoke-CFAPI4Request {
 }
 
 
-
-
 Function Remove-CFFirewallRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Remove-CFFirewallRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Remove-CFFirewallRule.md
     #>
     [CmdletBinding( SupportsShouldProcess = $true )]
     Param (
@@ -1273,13 +1352,11 @@ Function Remove-CFFirewallRule {
 }
 
 
-
-
 Function Set-CFCurrentZone {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Set-CFCurrentZone.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Set-CFCurrentZone.md
     #>
 
     [CmdletBinding()]
@@ -1308,12 +1385,11 @@ Function Set-CFCurrentZone {
 
 
 
-
 Function Set-CFFirewallRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Set-CFFirewallRule.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Set-CFFirewallRule.md
     #>
 
     [CmdletBinding()]
@@ -1421,13 +1497,11 @@ Function Set-CFFirewallRule {
 }
 
 
-
-
 Function Set-CFRequestData {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
     .LINK
-        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Set-CFRequestData.md
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.4/docs/Functions/Set-CFRequestData.md
     #>
 
     [CmdletBinding()]
@@ -1456,10 +1530,7 @@ Function Set-CFRequestData {
 }
 
 
-
-
 ## Post-Load Module code ##
-
 
 # Use this variable for any path-sepecific actions (like loading dlls and such) to ensure it will work in testing and after being built
 $MyModulePath = $(
@@ -1482,20 +1553,43 @@ $MyModulePath = $(
     Get-ScriptPath
 )
 
+# Load any plugins found in the plugins directory
+if (Test-Path (Join-Path $MyModulePath 'plugins')) {
+    Get-ChildItem (Join-Path $MyModulePath 'plugins') -Directory | ForEach-Object {
+        if (Test-Path (Join-Path $_.FullName "Load.ps1")) {
+            Invoke-Command -NoNewScope -ScriptBlock ([Scriptblock]::create(".{$(Get-Content -Path (Join-Path $_.FullName "Load.ps1") -Raw)}")) -ErrorVariable errmsg 2>$null
+        }
+    }
+}
 
-#region Module Cleanup
 $ExecutionContext.SessionState.Module.OnRemove = {
     # Action to take if the module is removed
+    # Unload any plugins found in the plugins directory
+    if (Test-Path (Join-Path $MyModulePath 'plugins')) {
+        Get-ChildItem (Join-Path $MyModulePath 'plugins') -Directory | ForEach-Object {
+            if (Test-Path (Join-Path $_.FullName "UnLoad.ps1")) {
+                Invoke-Command -NoNewScope -ScriptBlock ([Scriptblock]::create(".{$(Get-Content -Path (Join-Path $_.FullName "UnLoad.ps1") -Raw)}")) -ErrorVariable errmsg 2>$null
+            }
+        }
+    }
 }
 
 $null = Register-EngineEvent -SourceIdentifier ( [System.Management.Automation.PsEngineEvent]::Exiting ) -Action {
     # Action to take if the whole pssession is killed
+    # Unload any plugins found in the plugins directory
+    if (Test-Path (Join-Path $MyModulePath 'plugins')) {
+        Get-ChildItem (Join-Path $MyModulePath 'plugins') -Directory | ForEach-Object {
+            if (Test-Path (Join-Path $_.FullName "UnLoad.ps1")) {
+                Invoke-Command -NoNewScope -ScriptBlock [Scriptblock]::create(".{$(Get-Content -Path (Join-Path $_.FullName "UnLoad.ps1") -Raw)}") -ErrorVariable errmsg 2>$null
+            }
+        }
+    }
 }
-#endregion Module Cleanup
 
-# Exported members
+# Use this in your scripts to check if the function is being called from your module or independantly.
+$ThisModuleLoaded = $true
+
+# Non-function exported public module members might go here.
 #Export-ModuleMember -Variable SomeVariable -Function  *
-
-
 
 

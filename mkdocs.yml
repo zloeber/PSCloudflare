@@ -1,0 +1,32 @@
+﻿use_directory_urls: false
+site_author: Zachary Loeber
+copyright: PSCloudFlare is licensed under <a href='https://github.com/zloeber/PSCloudFlare/blob/master/License.md'>this</a> license
+theme: readthedocs
+site_name: PSCloudFlare Docs
+pages:
+- Acknowledgements: Acknowledgements.md
+- ChangeLog: ChangeLog.md
+- Contributing: Contributing.md
+- Index: Index.md
+- Functions:
+  - Add-CFFirewallRule: Functions/Add-CFFirewallRule.md
+  - Connect-CFClientAPI: Functions/Connect-CFClientAPI.md
+  - Get-CFCurrentZone: Functions/Get-CFCurrentZone.md
+  - Get-CFCurrentZoneID: Functions/Get-CFCurrentZoneID.md
+  - Get-CFDNSRecord: Functions/Get-CFDNSRecord.md
+  - Get-CFFirewallRule: Functions/Get-CFFirewallRule.md
+  - Get-CFIP: Functions/Get-CFIP.md
+  - Get-CFPageRule: Functions/Get-CFPageRule.md
+  - Get-CFRequestData: Functions/Get-CFRequestData.md
+  - Get-CFTrafficLog: Functions/Get-CFTrafficLog.md
+  - Get-CFWAFRule: Functions/Get-CFWAFRule.md
+  - Get-CFWAFRuleGroup: Functions/Get-CFWAFRuleGroup.md
+  - Get-CFWAFRulePackage: Functions/Get-CFWAFRulePackage.md
+  - Get-CFZoneID: Functions/Get-CFZoneID.md
+  - Invoke-CFAPI4Request: Functions/Invoke-CFAPI4Request.md
+  - Remove-CFFirewallRule: Functions/Remove-CFFirewallRule.md
+  - Set-CFCurrentZone: Functions/Set-CFCurrentZone.md
+  - Set-CFFirewallRule: Functions/Set-CFFirewallRule.md
+  - Set-CFRequestData: Functions/Set-CFRequestData.md
+repo_url: https://github.com/zloeber/PSCloudFlare
+

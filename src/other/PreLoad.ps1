@@ -50,3 +50,15 @@ Enum CFPageRuleStatus {
     active
     disabled
 }
+
+Enum CFDNSRecordType {
+    A
+    AAAA
+    CNAME
+    TXT
+    SRV
+    LOC
+    MX
+    NS
+    SPF
+}

@@ -1,4 +1,4 @@
-﻿# Run this in an administrative PowerShell prompt to install the PSCloudFlare PowerShell module:
+# Run this in an administrative PowerShell prompt to install the PSCloudFlare PowerShell module:
 #
 # 	iex (New-Object Net.WebClient).DownloadString("https://github.com/zloeber/PSCloudFlare/raw/master/Install.ps1")
 
