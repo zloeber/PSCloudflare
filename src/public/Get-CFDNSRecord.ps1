@@ -6,6 +6,8 @@
     List Cloudflare page rules.
     .PARAMETER ZoneID
     If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
+    .PARAMETER ID
+    A Cloudflare ID for the record.
     .PARAMETER RecordType
     Record type to retrieve. If no value is passed all types will be enumerated.
     .PARAMETER Name
@@ -35,6 +37,10 @@
             IsNullOrCFID $_
         })]
         [String]$ZoneID,
+
+        [Parameter()]
+        [ValidateScript({ IsCFID $_ })]
+        [String]$ID,
 
         [Parameter()]
         [CFDNSRecordType]$RecordType,
@@ -70,30 +76,42 @@
         throw 'No Zone was set or passed!'
     }
 
-    # If no record type was passed then try to get them all
-    if ($null -eq [CFDNSRecordType]::$RecordType) {
+    $Data = @{
+        'direction' = $Direction
+        'match' = $MatchScope
+        'order' = $Order
+        'per_page' = $PerPage
+    }
+
+    if (-not [string]::IsNullOrEmpty($ID)) {
+        # If we passed a CF ID then get the record associated with it.
+        $Uri = $Script:APIURI + ('/zones/{0}/dns_records/{1}' -f $ZoneID,$ID)
+
+        Write-Verbose "$($FunctionName): Requesting DNS record information for CF ID - $ID"
+        Set-CFRequestData -Uri $Uri
+        return (Invoke-CFAPI4Request -ErrorAction Stop).result
+    }
+    # If no record type was passed then try to get them all by type
+    elseif ($null -eq [CFDNSRecordType]::$RecordType) {
         $PassedParams = $PsCmdlet.MyInvocation.BoundParameters
         [enum]::getnames([CFDNSRecordType]) | ForEach {
+            Write-Verbose "$($Functionname): Attempting to retreive DNS records of type - $($_)"
             Get-CFDNSRecord @PassedParams -RecordType $_
+            return # Return here so we don't over process
         }
     }
     else {
-        $Data = @{
-            'direction' = $Direction
-            'match' = $MatchScope
-            'order' = $Order
-            'per_page' = $PerPage
-        }
         $Data.type = $RecordType.ToString()
-        # Always start at the first page
-        $Data.page = 1
-
-        if ($null -ne $Name) {
+        if (-not [string]::IsNullOrEmpty($Name)) {
+            Write-Verbose "$($Functionname): Looking for $RecordType DNS name $Name"
             $Data.name = $Name
         }
-
-        # Construct the URI for this package
         $Uri = $Script:APIURI + ('/zones/{0}/dns_records' -f $ZoneID)
+    }
+
+    if (-not [string]::IsNullOrEmpty($Uri)) {
+        # Always start at the first page
+        $Data.page = 1
 
         # Get the first page, from there we will be able to see the total page numbers
         try {
@@ -124,5 +142,4 @@
             }
         }
     }
-
 }

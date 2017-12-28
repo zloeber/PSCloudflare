@@ -9,6 +9,7 @@ pages:
 - Contributing: Contributing.md
 - Index: Index.md
 - Functions:
+  - Add-CFDNSRecord: Functions/Add-CFDNSRecord.md
   - Add-CFFirewallRule: Functions/Add-CFFirewallRule.md
   - Connect-CFClientAPI: Functions/Connect-CFClientAPI.md
   - Get-CFCurrentZone: Functions/Get-CFCurrentZone.md
@@ -26,6 +27,7 @@ pages:
   - Invoke-CFAPI4Request: Functions/Invoke-CFAPI4Request.md
   - Remove-CFFirewallRule: Functions/Remove-CFFirewallRule.md
   - Set-CFCurrentZone: Functions/Set-CFCurrentZone.md
+  - Set-CFDNSRecord: Functions/Set-CFDNSRecord.md
   - Set-CFFirewallRule: Functions/Set-CFFirewallRule.md
   - Set-CFRequestData: Functions/Set-CFRequestData.md
 repo_url: https://github.com/zloeber/PSCloudFlare

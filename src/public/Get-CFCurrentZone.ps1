@@ -11,5 +11,5 @@ Function Get-CFCurrentZone {
 .LINK
     https://github.com/zloeber/PSCloudFlare
 #>
-    return $Script:Zone
+    return $Script:ZoneName
 }

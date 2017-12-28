@@ -5,33 +5,32 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Get-CFDNSRecord
+# Set-CFFirewallRule
 
 ## SYNOPSIS
-List Cloudflare page rules.
+Modifies a cloudflare firewall rule.
 
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
- [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Set-CFFirewallRule [[-ZoneID] <String>] [-ID] <String[]> [[-Item] <String>] [[-Target] <CFFirewallTarget>]
+ [[-Mode] <CFFirewallMode>] [[-Notes] <String>]
 ```
 
 ## DESCRIPTION
-List Cloudflare page rules.
+Modifies a cloudflare firewall rule.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-CFDNSRecord
+Set-CFFirewallRule -ZoneID $ZoneID -Item '96.9.128.0/24' -Notes 'Load Balancer Ip Block - 4.1' -Target 'ip_range' -Mode:challenge -Verbose
 ```
-
-Shows all DNS records in the current zone
 
 ## PARAMETERS
 
 ### -ZoneID
+You apply firewall rules to individual zones or to the whole organization.
 If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
 
 ```yaml
@@ -47,29 +46,27 @@ Accept wildcard characters: False
 ```
 
 ### -ID
-A Cloudflare ID for the record.
+The firewall ID you would like to modify.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Item
+This can be an IP, IP range (Cidr notation), ASN (AS####), or 2 letter Country code
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RecordType
-Record type to retrieve.
-If no value is passed all types will be enumerated.
-
-```yaml
-Type: CFDNSRecordType
-Parameter Sets: (All)
-Aliases: 
-Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
 Required: False
 Position: 3
@@ -78,14 +75,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-DNS record name.
-If not passed then all records will be returned.
+### -Target
+Are you adding an IP, IP_Range, ASN, or Country?
 
 ```yaml
-Type: String
+Type: CFFirewallTarget
 Parameter Sets: (All)
 Aliases: 
+Accepted values: ip, ip_range, country, asn
 
 Required: False
 Position: 4
@@ -94,25 +91,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PerPage
-Maximum results returned per page.
-Default is 50.
+### -Mode
+What is this rule going to do?
+Options include whitelist, block, challenge, js_challenge.
+Default is to whitelist.
 
 ```yaml
-Type: Int32
+Type: CFFirewallMode
 Parameter Sets: (All)
 Aliases: 
+Accepted values: whitelist, block, challenge, js_challenge
 
 Required: False
 Position: 5
-Default value: 50
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Order
-Order the results by type, name, content, ttl, or proxied.
-Default is name.
+### -Notes
+Any additional notes for the added firewall rule
 
 ```yaml
 Type: String
@@ -121,39 +119,7 @@ Aliases:
 
 Required: False
 Position: 6
-Default value: Name
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Direction
-Return results in asc (ascending) or dec (decending) order.
-Default is asc.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 7
-Default value: Asc
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MatchScope
-Match either 'any' or 'all' the supplied matching parameters passed to this function.
-Default is all.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 8
-Default value: All
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

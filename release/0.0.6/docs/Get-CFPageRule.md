@@ -5,7 +5,7 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Get-CFDNSRecord
+# Get-CFPageRule
 
 ## SYNOPSIS
 List Cloudflare page rules.
@@ -13,8 +13,8 @@ List Cloudflare page rules.
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
- [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Get-CFPageRule [[-ZoneID] <String>] [[-Status] <CFPageRuleStatus>] [[-OrderBy] <String>]
+ [[-Direction] <String>] [[-MatchScope] <String>] [[-PageLimit] <Int32>]
 ```
 
 ## DESCRIPTION
@@ -24,10 +24,15 @@ List Cloudflare page rules.
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-CFDNSRecord
+Get-CFPageRule
 ```
 
-Shows all DNS records in the current zone
+Shows all cloudflare Page rules for the zone.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+TBD
+```
 
 ## PARAMETERS
 
@@ -46,13 +51,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ID
-A Cloudflare ID for the record.
+### -Status
+Rule status.
+Can be active, inactive, or null.
+Default is null (returns both active and inactive rules).
 
 ```yaml
-Type: String
+Type: CFPageRuleStatus
 Parameter Sets: (All)
 Aliases: 
+Accepted values: active, disabled
 
 Required: False
 Position: 2
@@ -61,67 +69,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RecordType
-Record type to retrieve.
-If no value is passed all types will be enumerated.
+### -OrderBy
+Order the results by status or priority.
+Default is priority.
 
 ```yaml
-Type: CFDNSRecordType
+Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
 Required: False
 Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-DNS record name.
-If not passed then all records will be returned.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PerPage
-Maximum results returned per page.
-Default is 50.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 5
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Order
-Order the results by type, name, content, ttl, or proxied.
-Default is name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 6
-Default value: Name
+Default value: Priority
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -136,7 +95,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 4
 Default value: Asc
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -152,8 +111,24 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 8
+Position: 5
 Default value: All
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PageLimit
+Maximum results returned per page.
+Default is 50.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 6
+Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -5,33 +5,41 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Get-CFDNSRecord
+# Get-CFWAFRulePackage
 
 ## SYNOPSIS
-List Cloudflare page rules.
+List Cloudflare WAF rules.
 
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
- [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Get-CFWAFRulePackage [[-ZoneID] <String>] [[-Name] <String>] [[-OrderBy] <String>] [[-Direction] <String>]
+ [[-MatchScope] <String>] [[-PageLimit] <Int32>]
 ```
 
 ## DESCRIPTION
-List Cloudflare page rules.
+List Cloudflare WAF rules.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-CFDNSRecord
+Set-CFCurrentZone 'contoso.org'
 ```
 
-Shows all DNS records in the current zone
+PS\> Get-CFWAFRulePackage
+
+Shows all cloudflare WAF rule packages for the contoso.org zone.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+TBD
+```
 
 ## PARAMETERS
 
 ### -ZoneID
+You apply WAF rules to individual zones or to the whole organization.
 If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
 
 ```yaml
@@ -46,8 +54,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ID
-A Cloudflare ID for the record.
+### -Name
+rule package name.
+If not supplied then all rule packages are returned.
 
 ```yaml
 Type: String
@@ -61,66 +70,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RecordType
-Record type to retrieve.
-If no value is passed all types will be enumerated.
+### -OrderBy
+Order the results by configuration_target, configuration_value, or mode.
+Default is configuration_value
 
 ```yaml
-Type: CFDNSRecordType
+Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
 Required: False
 Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-DNS record name.
-If not passed then all records will be returned.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PerPage
-Maximum results returned per page.
-Default is 50.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 5
-Default value: 50
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Order
-Order the results by type, name, content, ttl, or proxied.
-Default is name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 6
 Default value: Name
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -136,7 +96,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 4
 Default value: Asc
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -152,8 +112,24 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 8
+Position: 5
 Default value: All
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PageLimit
+Maximum results returned per page.
+Default is 50.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 6
+Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

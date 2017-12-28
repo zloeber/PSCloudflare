@@ -189,7 +189,7 @@
                 <div class="col-sm-4 col-md-5 col-lg-4 right-header">
                     <h5>
                         Analyzed path :<span class="right-header-data"> src\public</span><br>
-                        Analysis date :<span class="right-header-data"> 2017-12-13 22:00:04Z</span>
+                        Analysis date :<span class="right-header-data"> 2017-12-27 21:17:05Z</span>
                     </h5>
                 </div>
             </div>
@@ -213,7 +213,7 @@
                                 <h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i> Number of Files</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>19</h2>
+                                <h2>21</h2>
                             </div>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                                 <h3 class="panel-title"><i class="fa fa-code" aria-hidden="true">&nbsp;</i> Number of Functions</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>19</h2>
+                                <h2>21</h2>
                             </div>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>1159</h2>
+                                <h2>1358</h2>
                             </div>
                         </div>
                     </div>
@@ -246,9 +246,9 @@
                             </div>
                             <table class="table">
                                 <tr class="text-success"><td>Errors</td><td>0</td></tr>
-                                <tr class="text-danger"><td>Warnings</td><td>22</td></tr>
+                                <tr class="text-danger"><td>Warnings</td><td>26</td></tr>
                                 <tr class="text-success"><td>Information</td><td>1</td></tr>
-                                <tr class="text-success"><td>Total</td><td>23</td></tr>
+                                <tr class="text-success"><td>Total</td><td>27</td></tr>
                             </table>
                         </div>
                     </div>
@@ -282,7 +282,7 @@
                                 <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Total</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>23</h2>
+                                <h2>27</h2>
                             </div>
                         </div>
                     </div>
@@ -302,7 +302,7 @@
                                 <h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Warnings</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>22</h2>
+                                <h2>26</h2>
                             </div>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
                                 <h3 class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Average</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>1.21</h2>
+                                <h2>1.29</h2>
                             </div>
                         </div>
                     </div>
@@ -355,6 +355,32 @@
                                     </tr>                            
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td>Add-CFDNSRecord</td>
+                                        <td class="success">2</td>
+                                        <td class="warning">
+                                            <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
+                                            <table>
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Add-CFDNSRecord.ps1<br>
+Line (in the function) : 94<br>
+Severity                      : Warning<br>
+RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
+Message                       : The variable 'Response' is assigned but never used.<br>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Add-CFDNSRecord.ps1<br>
+Line (in the function) : 58<br>
+Severity                      : Warning<br>
+RuleName                      : PSPossibleIncorrectComparisonWithNull<br>
+Message                       : $null should be on the left side of equality comparisons.<br>
+                                                    </td>
+                                                </tr>
+                                             </table>
+                                        </td>
+                                        <td class="success">True</td>
+                                    </tr>
                                     <tr>
                                         <td>Add-CFFirewallRule</td>
                                         <td class="success">2</td>
@@ -407,7 +433,7 @@ Message                       : $null should be on the left side of equality com
                                             <table>
                                                  <tr>
                                                     <td class="warning cell-largeContent">ScriptName : Get-CFDNSRecord.ps1<br>
-Line (in the function) : 76<br>
+Line (in the function) : 97<br>
 Severity                      : Warning<br>
 RuleName                      : PSAvoidUsingCmdletAliases<br>
 Message                       : 'ForEach' is an alias of 'ForEach-Object'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.<br>
@@ -597,18 +623,18 @@ Message                       : $null should be on the left side of equality com
                                             <table>
                                                  <tr>
                                                     <td class="warning cell-largeContent">ScriptName : Remove-CFFirewallRule.ps1<br>
-Line (in the function) : 58<br>
-Severity                      : Warning<br>
-RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
-Message                       : The variable 'Response' is assigned but never used.<br>
-                                                    </td>
-                                                </tr>
-                                                 <tr>
-                                                    <td class="warning cell-largeContent">ScriptName : Remove-CFFirewallRule.ps1<br>
 Line (in the function) : 38<br>
 Severity                      : Warning<br>
 RuleName                      : PSPossibleIncorrectComparisonWithNull<br>
 Message                       : $null should be on the left side of equality comparisons.<br>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Remove-CFFirewallRule.ps1<br>
+Line (in the function) : 58<br>
+Severity                      : Warning<br>
+RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
+Message                       : The variable 'Response' is assigned but never used.<br>
                                                     </td>
                                                 </tr>
                                              </table>
@@ -634,27 +660,37 @@ Message                       : Function ’Set-CFCurrentZone’ has verb that c
                                         <td class="success">True</td>
                                     </tr>
                                     <tr>
-                                        <td>Set-CFFirewallRule</td>
-                                        <td class="success">5</td>
+                                        <td>Set-CFDNSRecord</td>
+                                        <td class="success">2</td>
                                         <td class="warning">
                                             <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
                                             <table>
                                                  <tr>
-                                                    <td class="warning cell-largeContent">ScriptName : Set-CFFirewallRule.ps1<br>
-Line (in the function) : 122<br>
+                                                    <td class="warning cell-largeContent">ScriptName : Set-CFDNSRecord.ps1<br>
+Line (in the function) : 128<br>
 Severity                      : Warning<br>
 RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
 Message                       : The variable 'Response' is assigned but never used.<br>
                                                     </td>
                                                 </tr>
                                                  <tr>
-                                                    <td class="warning cell-largeContent">ScriptName : Set-CFFirewallRule.ps1<br>
+                                                    <td class="warning cell-largeContent">ScriptName : Set-CFDNSRecord.ps1<br>
 Line (in the function) : 1<br>
 Severity                      : Warning<br>
 RuleName                      : PSUseShouldProcessForStateChangingFunctions<br>
-Message                       : Function ’Set-CFFirewallRule’ has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.<br>
+Message                       : Function ’Set-CFDNSRecord’ has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.<br>
                                                     </td>
                                                 </tr>
+                                             </table>
+                                        </td>
+                                        <td class="success">True</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Set-CFFirewallRule</td>
+                                        <td class="success">5</td>
+                                        <td class="warning">
+                                            <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
+                                            <table>
                                                  <tr>
                                                     <td class="warning cell-largeContent">ScriptName : Set-CFFirewallRule.ps1<br>
 Line (in the function) : 54<br>
@@ -677,6 +713,22 @@ Line (in the function) : 100<br>
 Severity                      : Warning<br>
 RuleName                      : PSAvoidUsingCmdletAliases<br>
 Message                       : 'Foreach' is an alias of 'ForEach-Object'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.<br>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Set-CFFirewallRule.ps1<br>
+Line (in the function) : 122<br>
+Severity                      : Warning<br>
+RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
+Message                       : The variable 'Response' is assigned but never used.<br>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Set-CFFirewallRule.ps1<br>
+Line (in the function) : 1<br>
+Severity                      : Warning<br>
+RuleName                      : PSUseShouldProcessForStateChangingFunctions<br>
+Message                       : Function ’Set-CFFirewallRule’ has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.<br>
                                                     </td>
                                                 </tr>
                                              </table>
@@ -716,7 +768,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>1159</h2>
+                                <h2>1358</h2>
                             </div>
                         </div>
                     </div>
@@ -726,7 +778,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Highest</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>28</h2>
+                                <h2>29</h2>
                             </div>
                         </div>
                     </div>
@@ -748,7 +800,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Average</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>61</h2>
+                                <h2>64.67</h2>
                             </div>
                         </div>
                     </div>
@@ -758,7 +810,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Average</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>7.84</h2>
+                                <h2>8.52</h2>
                             </div>
                         </div>
                     </div>
@@ -768,7 +820,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Average</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>2.05</h2>
+                                <h2>2.14</h2>
                             </div>
                         </div>
                     </div>
@@ -789,6 +841,12 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                     </tr>                            
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td>Add-CFDNSRecord</td>
+                                        <td class="danger">76</td>
+                                        <td class="success">11</td>
+                                        <td class="success">3</td>
+                                    </tr>
                                     <tr>
                                         <td>Add-CFFirewallRule</td>
                                         <td class="danger">102</td>
@@ -815,8 +873,8 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                     </tr>
                                     <tr>
                                         <td>Get-CFDNSRecord</td>
-                                        <td class="danger">100</td>
-                                        <td class="success">9</td>
+                                        <td class="danger">115</td>
+                                        <td class="success">11</td>
                                         <td class="success">3</td>
                                     </tr>
                                     <tr>
@@ -887,14 +945,20 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                     </tr>
                                     <tr>
                                         <td>Set-CFCurrentZone</td>
-                                        <td class="success">25</td>
+                                        <td class="success">26</td>
                                         <td class="success">3</td>
                                         <td class="success">2</td>
                                     </tr>
                                     <tr>
+                                        <td>Set-CFDNSRecord</td>
+                                        <td class="danger">107</td>
+                                        <td class="warning">16</td>
+                                        <td class="success">3</td>
+                                    </tr>
+                                    <tr>
                                         <td>Set-CFFirewallRule</td>
                                         <td class="danger">105</td>
-                                        <td class="warning">28</td>
+                                        <td class="warning">29</td>
                                         <td class="success">4</td>
                                     </tr>
                                     <tr>
@@ -950,7 +1014,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>530</h2>
+                                <h2>625</h2>
                             </div>
                         </div>
                     </div>
@@ -1014,6 +1078,11 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>Add-CFDNSRecord</td>
+                                        <td class="danger">0</td>
+                                        <td class="danger">32</td>
+                                    </tr>
+                                    <tr>
                                         <td>Add-CFFirewallRule</td>
                                         <td class="danger">0</td>
                                         <td class="danger">47</td>
@@ -1036,7 +1105,7 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                     <tr>
                                         <td>Get-CFDNSRecord</td>
                                         <td class="danger">0</td>
-                                        <td class="danger">43</td>
+                                        <td class="danger">58</td>
                                     </tr>
                                     <tr>
                                         <td>Get-CFFirewallRule</td>
@@ -1096,12 +1165,17 @@ Message                       : Function ’Set-CFRequestData’ has verb that c
                                     <tr>
                                         <td>Set-CFCurrentZone</td>
                                         <td class="danger">0</td>
-                                        <td class="warning">11</td>
+                                        <td class="warning">12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Set-CFDNSRecord</td>
+                                        <td class="danger">0</td>
+                                        <td class="danger">46</td>
                                     </tr>
                                     <tr>
                                         <td>Set-CFFirewallRule</td>
                                         <td class="danger">0</td>
-                                        <td class="danger">60</td>
+                                        <td class="danger">61</td>
                                     </tr>
                                     <tr>
                                         <td>Set-CFRequestData</td>

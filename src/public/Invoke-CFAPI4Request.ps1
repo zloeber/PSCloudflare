@@ -24,7 +24,7 @@
     Param (
         [Parameter()]
         [Uri]$Uri = ($Script:RESTParams).URI,
-       
+
         [Parameter()]
         [HashTable]$Headers = ($Script:RESTParams).Headers,
 
@@ -37,12 +37,12 @@
 
     $FunctionName = $MyInvocation.MyCommand.Name
 
-    if ($Uri -eq $null) {
+    if ($null -eq $Uri) {
         throw "$($FunctionName): Need to run Set-CFRequestData first!"
     }
 
     # Make null if nothing passed, if the method is 'get' then convert to json, anything else leave as it is.
-    $BodyData = if ($Body -eq $null) {$null} else { if ($Method -ne 'Get') {$Body | ConvertTo-Json} else {$Body}}
+    $BodyData = if ($null -eq $Body) { $null } else { if ($Method -ne 'Get') {$Body | ConvertTo-Json} else { $Body } }
 
     try {
         $JSONResponse = Invoke-RestMethod -Uri $Uri -Headers $Headers -ContentType 'application/json' -Method $Method -Body $BodyData -ErrorAction Stop
@@ -57,20 +57,20 @@
                 $reader = New-Object -TypeName System.IO.StreamReader -ArgumentList ($result)
                 $responseBody = $reader.ReadToEnd()
                 $JSONResponse = $responseBody | ConvertFrom-Json
-                
+
                 $CloudFlareErrorCode = $JSONResponse.Errors[0].code
                 $CloudFlareMessage = $JSONResponse.Errors[0].message
 
                 # Some errors are just plain unfriendly, so I make them more understandable
                 switch ($CloudFlareErrorCode) {
                     9103 {
-                        throw '[CloudFlare Error 9103] Your Cloudflare API or email address appears to be incorrect.' 
+                        throw '[CloudFlare Error 9103] Your Cloudflare API or email address appears to be incorrect.'
                     }
                     81019  {
-                        throw '[CloudFlare Error 81019] Cloudflare access rule quota has been exceeded: You may be trying to add more access rules than your account currently allows. Please check the --rule-limit option.' 
+                        throw '[CloudFlare Error 81019] Cloudflare access rule quota has been exceeded: You may be trying to add more access rules than your account currently allows. Please check the --rule-limit option.'
                     }
                     default {
-                        throw '[CloudFlare Error {0}] {1}' -f $CloudFlareErrorCode, $CloudFlareMessage 
+                        throw '[CloudFlare Error {0}] {1}' -f $CloudFlareErrorCode, $CloudFlareMessage
                     }
                 }
             }
@@ -86,6 +86,6 @@
             Throw $MyError
         }
     }
-    
+
     $JSONResponse
 }

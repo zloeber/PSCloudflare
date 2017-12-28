@@ -5,33 +5,32 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Get-CFDNSRecord
+# Add-CFDNSRecord
 
 ## SYNOPSIS
-List Cloudflare page rules.
+Adds a cloudflare dns record.
 
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
- [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Add-CFDNSRecord [[-ZoneID] <String>] [-RecordType] <CFDNSRecordType> [-Name] <String> [-Content] <String>
+ [[-TTL] <Int32>] [[-Proxied] <CFDNSOrangeCloudMode>]
 ```
 
 ## DESCRIPTION
-List Cloudflare page rules.
+Adds a cloudflare dns record.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-CFDNSRecord
+TBD
 ```
-
-Shows all DNS records in the current zone
 
 ## PARAMETERS
 
 ### -ZoneID
+You apply dns records to individual zones or to the whole organization.
 If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
 
 ```yaml
@@ -46,24 +45,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ID
-A Cloudflare ID for the record.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RecordType
-Record type to retrieve.
-If no value is passed all types will be enumerated.
+Type of record to modify.
 
 ```yaml
 Type: CFDNSRecordType
@@ -71,32 +54,46 @@ Parameter Sets: (All)
 Aliases: 
 Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
-Required: False
-Position: 3
+Required: True
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Name
-DNS record name.
-If not passed then all records will be returned.
+name of the record to modify.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Content
+DNS record value write.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
 Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PerPage
-Maximum results returned per page.
-Default is 50.
+### -TTL
+Time to live, optional update setting.
+Default is 120.
 
 ```yaml
 Type: Int32
@@ -105,55 +102,24 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: 50
+Default value: 120
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Order
-Order the results by type, name, content, ttl, or proxied.
-Default is name.
+### -Proxied
+Set or unset orange cloud mode for a record.
+Optional.
 
 ```yaml
-Type: String
+Type: CFDNSOrangeCloudMode
 Parameter Sets: (All)
 Aliases: 
+Accepted values: on, off
 
 Required: False
 Position: 6
-Default value: Name
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Direction
-Return results in asc (ascending) or dec (decending) order.
-Default is asc.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 7
-Default value: Asc
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MatchScope
-Match either 'any' or 'all' the supplied matching parameters passed to this function.
-Default is all.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 8
-Default value: All
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -5,33 +5,40 @@ online version: https://github.com/zloeber/PSCloudFlare
 schema: 2.0.0
 ---
 
-# Get-CFDNSRecord
+# Get-CFWAFRule
 
 ## SYNOPSIS
-List Cloudflare page rules.
+List Cloudflare WAF rules.
 
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
- [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Get-CFWAFRule [[-ZoneID] <String>] [[-PackageID] <String>] [[-GroupID] <String>] [[-Description] <String>]
+ [[-Mode] <CFWAFRuleMode>] [[-Priority] <Int32>] [[-OrderBy] <String>] [[-Direction] <String>]
+ [[-MatchScope] <String>] [[-PageLimit] <Int32>]
 ```
 
 ## DESCRIPTION
-List Cloudflare page rules.
+List Cloudflare WAF rules.
 
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
-Get-CFDNSRecord
+Get-CFWAFRule
 ```
 
-Shows all DNS records in the current zone
+Shows all cloudflare WAF rules for the zone.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+TBD
+```
 
 ## PARAMETERS
 
 ### -ZoneID
+You apply WAF rules to individual zones or to the whole organization.
 If you pass ZoneID it will be targeted otherwise the currently loaded zone from Set-CFCurrentZone is targeted.
 
 ```yaml
@@ -46,8 +53,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ID
-A Cloudflare ID for the record.
+### -PackageID
+Package ID to query.
+If not supplied then all package IDs are queried.
 
 ```yaml
 Type: String
@@ -61,15 +69,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RecordType
-Record type to retrieve.
-If no value is passed all types will be enumerated.
+### -GroupID
+Group ID to query.
+If not supplied then all group IDs are queried.
 
 ```yaml
-Type: CFDNSRecordType
+Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
 Required: False
 Position: 3
@@ -78,9 +85,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-DNS record name.
-If not passed then all records will be returned.
+### -Description
+Description to query for.
 
 ```yaml
 Type: String
@@ -94,9 +100,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PerPage
-Maximum results returned per page.
-Default is 50.
+### -Mode
+WAF mode to query for.
+Can be whitelist, block, challenge, or js_challenge.
+Default is all modes.
+
+```yaml
+Type: CFWAFRuleMode
+Parameter Sets: (All)
+Aliases: 
+Accepted values: on, off, default, disable, simulate, block, challenge
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Priority
+WAF priority to query for.
+Default is all priorities.
 
 ```yaml
 Type: Int32
@@ -104,15 +128,15 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 5
-Default value: 50
+Position: 6
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Order
-Order the results by type, name, content, ttl, or proxied.
-Default is name.
+### -OrderBy
+Order the results by configuration_target, configuration_value, or mode.
+Default is configuration_value
 
 ```yaml
 Type: String
@@ -120,8 +144,8 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 6
-Default value: Name
+Position: 7
+Default value: Group_id
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -136,7 +160,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 8
 Default value: Asc
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -152,8 +176,24 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 8
+Position: 9
 Default value: All
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PageLimit
+Maximum results returned per page.
+Default is 50.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 10
+Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

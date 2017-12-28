@@ -13,8 +13,8 @@ List Cloudflare page rules.
 ## SYNTAX
 
 ```
-Get-CFDNSRecord [[-ZoneID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>] [[-PerPage] <Int32>]
- [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
+Get-CFDNSRecord [[-ZoneID] <String>] [[-ID] <String>] [[-RecordType] <CFDNSRecordType>] [[-Name] <String>]
+ [[-PerPage] <Int32>] [[-Order] <String>] [[-Direction] <String>] [[-MatchScope] <String>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ID
+A Cloudflare ID for the record.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RecordType
 Record type to retrieve.
 If no value is passed all types will be enumerated.
@@ -57,7 +72,7 @@ Aliases:
 Accepted values: A, AAAA, CNAME, TXT, SRV, LOC, MX, NS, SPF
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -73,7 +88,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -89,7 +104,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 4
+Position: 5
 Default value: 50
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -105,7 +120,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 5
+Position: 6
 Default value: Name
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -121,7 +136,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 6
+Position: 7
 Default value: Asc
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -137,7 +152,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: 7
+Position: 8
 Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False

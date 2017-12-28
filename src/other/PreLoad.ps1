@@ -36,6 +36,11 @@ Enum CFWAFRuleGroupMode {
     off
 }
 
+Enum CFDNSOrangeCloudMode {
+    on
+    off
+}
+
 Enum CFWAFRuleMode {
     on
     off

@@ -24,6 +24,7 @@
     if ([string]::IsNullOrEmpty($Zone)) {
         Write-Verbose -Message ('Set-CFCurrentZone: Unsetting the targetted DNS zone.')
         $Script:ZoneID = $null
+        $Script:ZoneName = $null
     }
     else {
         try {
