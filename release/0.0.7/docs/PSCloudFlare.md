@@ -59,6 +59,9 @@ Returns the ZoneID of the passed zone name (if it exists)
 ### [Invoke-CFAPI4Request](Invoke-CFAPI4Request.md)
 Send REST request to Cloudflare URI.
 
+### [Remove-CFDNSRecord](Remove-CFDNSRecord.md)
+Removes a cloudflare dns record.
+
 ### [Remove-CFFirewallRule](Remove-CFFirewallRule.md)
 Removes a Cloudflare firewall rule.
 

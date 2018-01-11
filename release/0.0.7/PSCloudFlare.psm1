@@ -1399,6 +1399,55 @@ Function Invoke-CFAPI4Request {
 }
 
 
+function Remove-CFDNSRecord {
+    <#
+    .EXTERNALHELP PSCloudFlare-help.xml
+    .LINK
+        https://github.com/zloeber/PSCloudFlare/tree/master/release/0.0.7/docs/Functions/Remove-CFDNSRecord.md
+    #>
+    [CmdletBinding()]
+    Param (
+        [Parameter()]
+        [ValidateScript({ IsNullOrCFID $_ })]
+        [String]$ZoneID,
+
+        [Parameter(Mandatory=$true)]
+        [String]$ID
+    )
+    begin {
+        if ($script:ThisModuleLoaded -eq $true) {
+            Get-CallerPreference -Cmdlet $PSCmdlet -SessionState $ExecutionContext.SessionState
+        }
+        $FunctionName = $MyInvocation.MyCommand.Name
+        Write-Verbose "$($FunctionName): Begin."
+
+        # If the ZoneID is empty see if we have loaded one earlier in the module and use it instead.
+        if ([string]::IsNullOrEmpty($ZoneID) -and ($Script:ZoneID -ne $null)) {
+            Write-Verbose "$($FunctionName): No ZoneID was passed but the current targeted zone was $($Script:ZoneName) so this will be used."
+            $ZoneID = $Script:ZoneID
+        }
+        elseif ([string]::IsNullOrEmpty($ZoneID)) {
+            throw 'No Zone was set or passed!'
+        }
+    }
+    end {
+        # Construct the URI for this package
+        $Uri = $Script:APIURI + ('/zones/{0}/dns_records/{1}' -f $ZoneID,$ID)
+        Write-Verbose "$($FunctionName): URI = '$Uri'"
+
+        try {
+            Set-CFRequestData -Uri $Uri -Method 'Delete'
+            $Response = Invoke-CFAPI4Request -ErrorAction Stop
+        }
+        catch {
+            Throw $_
+        }
+
+        Write-Verbose "$($FunctionName): End."
+    }
+}
+
+
 Function Remove-CFFirewallRule {
 <#
     .EXTERNALHELP PSCloudFlare-help.xml
